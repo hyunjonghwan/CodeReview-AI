@@ -75,6 +75,53 @@
   --ease-out-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
   --duration-base: 200ms;
+
+  /* ---------- Animations (Dialog/Popover 진입·퇴장) ---------- */
+  /* design-refs.md Raycast: scale(0.96 → 1) + opacity, 150~200ms spring */
+  --animate-overlay-in: overlay-in var(--duration-base) var(--ease-out-spring);
+  --animate-overlay-out: overlay-out var(--duration-fast) var(--ease-out-spring);
+  --animate-content-in: content-in var(--duration-base) var(--ease-out-spring);
+  --animate-content-out: content-out var(--duration-fast) var(--ease-out-spring);
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes content-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
 }
 
 /* ------------------------------------------------------------------ */

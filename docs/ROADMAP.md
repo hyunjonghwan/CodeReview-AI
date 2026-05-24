@@ -25,7 +25,7 @@
 - [x] 2.2 CSS 변수로 다크/라이트 테마 정의 — `.dark` class selector + `next-themes` Provider
 - [x] 2.3 Inter, JetBrains Mono 폰트 로드 — `next/font/google`, `--font-sans`/`--font-mono`로 노출
 - [x] 2.4 Radix UI 설치 — slot/dialog/tabs/tooltip/select + sonner + cva/clsx/tailwind-merge + `lib/utils/cn.ts`
-- [ ] 2.5 컴포넌트 작성: Button (5 variants), Input, Card, Badge, Dialog
+- [x] 2.5 컴포넌트 작성: Button (5 variants), Input, Card, Badge, Dialog — `components/ui/` + Raycast식 모션 토큰
 - [ ] 2.6 Storybook 설치 및 설정
 - [ ] 2.7 위 5개 컴포넌트 스토리 작성 (각 3+ variant)
 - [ ] 2.8 Chromatic 연동 및 배포
