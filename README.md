@@ -3,12 +3,12 @@
 > Claude **Haiku / Sonnet / Opus** 3-tier 라우팅으로 비용을 줄이면서 리뷰 품질은 유지하는 AI 코드 리뷰 도구.
 
 [![Status](https://img.shields.io/badge/status-WIP-yellow)](#로드맵)
-[![Live](https://img.shields.io/badge/Vercel-deployed-000000?logo=vercel)](https://vercel.com/hyunjonghwans-projects/code-review-ai)
+[![Live Demo](https://img.shields.io/badge/Live-code--review--ai.vercel.app-000000?logo=vercel)](https://code-review-ai-azure.vercel.app/)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 
-> 🚧 **개발 중 (Week 2/8)** — 데모 GIF는 Week 4 MVP 완성 이후 추가 예정. 라이브 배포는 Vercel 대시보드의 Domains 참조.
+> 🚧 **개발 중 (Week 2/8)** — 라이브: https://code-review-ai-azure.vercel.app/ · 데모 GIF는 Week 4 MVP 완성 이후 추가 예정.
 
 ---
 

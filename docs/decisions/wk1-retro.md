@@ -11,7 +11,7 @@
 - **1.5** ESLint + Prettier + Husky + lint-staged 셋업, pre-commit에서 자동 lint/format
 - **1.6** `tsconfig.json` strict + `noUncheckedIndexedAccess` / `noImplicitOverride` / `noFallthroughCasesInSwitch`
 - **1.7** GitHub repo 생성 + README 초안 + 첫 push (`hyunjonghwan/CodeReview-AI`)
-- **1.8** Vercel 첫 배포 — 프로젝트: https://vercel.com/hyunjonghwans-projects/code-review-ai (라이브 URL은 Vercel 대시보드의 Domains 섹션 참조)
+- **1.8** Vercel 첫 배포 — 라이브: https://code-review-ai-azure.vercel.app/ · 대시보드: https://vercel.com/hyunjonghwans-projects/code-review-ai
 
 ## 트러블슈팅 노트
 
