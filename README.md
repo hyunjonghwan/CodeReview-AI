@@ -4,11 +4,16 @@
 
 [![Status](https://img.shields.io/badge/status-WIP-yellow)](#로드맵)
 [![Live Demo](https://img.shields.io/badge/Live-code--review--ai.vercel.app-000000?logo=vercel)](https://code-review-ai-azure.vercel.app/)
+[![Storybook](https://img.shields.io/badge/Storybook-Chromatic-FF4785?logo=storybook)](https://6a12e67cc8dfc60b4510bf4b-dlgqkfcfsj.chromatic.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 
-> 🚧 **개발 중 (Week 2/8)** — 라이브: https://code-review-ai-azure.vercel.app/ · 데모 GIF는 Week 4 MVP 완성 이후 추가 예정.
+> 🚧 **개발 중 (Week 2/8)**
+>
+> - 앱: https://code-review-ai-azure.vercel.app/
+> - 디자인 시스템: https://6a12e67cc8dfc60b4510bf4b-dlgqkfcfsj.chromatic.com/
+> - 데모 GIF는 Week 4 MVP 완성 이후 추가 예정.
 
 ---
 
@@ -68,14 +73,17 @@ pnpm dev
 
 ### 스크립트
 
-| 명령                | 동작                  |
-| ------------------- | --------------------- |
-| `pnpm dev`          | 개발 서버 (Turbopack) |
-| `pnpm build`        | 프로덕션 빌드         |
-| `pnpm start`        | 프로덕션 서버         |
-| `pnpm lint`         | ESLint 실행           |
-| `pnpm format`       | Prettier 포매팅       |
-| `pnpm format:check` | 포매팅 검사 (CI용)    |
+| 명령                   | 동작                                 |
+| ---------------------- | ------------------------------------ |
+| `pnpm dev`             | 개발 서버 (Turbopack)                |
+| `pnpm build`           | 프로덕션 빌드                        |
+| `pnpm start`           | 프로덕션 서버                        |
+| `pnpm lint`            | ESLint 실행                          |
+| `pnpm format`          | Prettier 포매팅                      |
+| `pnpm format:check`    | 포매팅 검사 (CI용)                   |
+| `pnpm storybook`       | Storybook (port 6006)                |
+| `pnpm build-storybook` | Storybook 정적 빌드                  |
+| `pnpm chromatic`       | Chromatic publish (CI에서 자동 실행) |
 
 커밋 시 `husky` + `lint-staged`로 자동 lint/format 실행.
 

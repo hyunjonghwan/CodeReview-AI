@@ -17,6 +17,8 @@ const eslintConfig = defineConfig([
     'out/**',
     'build/**',
     'next-env.d.ts',
+    // Storybook 정적 빌드 산출물 (chromatic publish용)
+    'storybook-static/**',
   ]),
   ...storybook.configs["flat/recommended"]
 ]);

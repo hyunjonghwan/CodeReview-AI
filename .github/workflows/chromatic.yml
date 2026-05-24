@@ -1,0 +1,37 @@
+name: Chromatic
+
+# Week 2.8 — main 푸시와 모든 PR에서 Storybook을 빌드해 Chromatic에 publish.
+# baseline은 main 기준이며 PR diff가 UI 변경을 동반하면 리뷰 링크가 코멘트로 달림.
+#
+# 사전 준비: GitHub repo Settings → Secrets and variables → Actions
+#   - CHROMATIC_PROJECT_TOKEN = chpt_xxxxxxxxxxxx
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  chromatic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # baseline 비교를 위해 전체 히스토리 필요
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Publish to Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          # baseline이 main에 자동 반영되어 PR diff만 검토 대상이 됨
+          exitOnceUploaded: true
