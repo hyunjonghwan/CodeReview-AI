@@ -28,7 +28,6 @@ const preview: Preview = {
       },
     },
     backgrounds: { disable: true },
-    a11y: { test: 'todo' },
   },
   globalTypes: {
     theme: {
