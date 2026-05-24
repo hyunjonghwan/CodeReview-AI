@@ -29,7 +29,7 @@
 - [x] 2.6 Storybook 설치 및 설정 — `@storybook/nextjs-vite` + preview에 `globals.css` + next-themes 토글
 - [x] 2.7 위 5개 컴포넌트 스토리 작성 (각 3+ variant) — `stories/*.stories.tsx`, wireframe(ReviewRow/Severity) 매핑 포함
 - [x] 2.8 Chromatic 연동 및 배포 — baseline 등록 (23 stories), `.github/workflows/chromatic.yml`로 push/PR 자동 publish
-- [ ] 2.9 회고 작성
+- [x] 2.9 회고 작성 — `docs/decisions/wk2-retro.md`
 
 ---
 
