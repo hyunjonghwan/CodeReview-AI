@@ -21,7 +21,7 @@
 
 ## Week 2: 디자인 시스템 기반 (목표 10h)
 
-- [ ] 2.1 `app/globals.css`의 `@theme` 블록에 디자인 토큰 적용 (Tailwind v4, PROJECT.md §7 참조)
+- [x] 2.1 `app/globals.css`의 `@theme` 블록에 디자인 토큰 적용 — 액센트는 indigo로 결정
 - [ ] 2.2 CSS 변수로 다크/라이트 테마 정의
 - [ ] 2.3 Inter, JetBrains Mono 폰트 로드
 - [ ] 2.4 Radix UI 설치
