@@ -27,7 +27,7 @@
 - [x] 2.4 Radix UI 설치 — slot/dialog/tabs/tooltip/select + sonner + cva/clsx/tailwind-merge + `lib/utils/cn.ts`
 - [x] 2.5 컴포넌트 작성: Button (5 variants), Input, Card, Badge, Dialog — `components/ui/` + Raycast식 모션 토큰
 - [x] 2.6 Storybook 설치 및 설정 — `@storybook/nextjs-vite` + preview에 `globals.css` + next-themes 토글
-- [ ] 2.7 위 5개 컴포넌트 스토리 작성 (각 3+ variant)
+- [x] 2.7 위 5개 컴포넌트 스토리 작성 (각 3+ variant) — `stories/*.stories.tsx`, wireframe(ReviewRow/Severity) 매핑 포함
 - [ ] 2.8 Chromatic 연동 및 배포
 - [ ] 2.9 회고 작성
 
