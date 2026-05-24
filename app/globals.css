@@ -80,6 +80,9 @@
 /* ------------------------------------------------------------------ */
 /*  Semantic surface tokens (라이트 기본)                              */
 /*  컴포넌트는 zinc-XXX가 아니라 bg/fg/border-* 시맨틱 토큰을 사용한다 */
+/*                                                                     */
+/*  다크 전환은 html.dark class 기반 (next-themes가 토글).             */
+/*  attribute="class"로 설정되어 있어 SSR 깜빡임 없음.                  */
 /* ------------------------------------------------------------------ */
 
 :root {
@@ -104,32 +107,34 @@
   --color-accent-default-token: var(--color-accent-500);
   --color-accent-hover: var(--color-accent-600);
   --color-accent-fg: #ffffff;
+
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* bg */
-    --color-bg-default: var(--color-neutral-950);
-    --color-bg-subtle: var(--color-neutral-900);
-    --color-bg-muted: var(--color-neutral-800);
-    --color-bg-inverse: var(--color-neutral-50);
+.dark {
+  /* bg */
+  --color-bg-default: var(--color-neutral-950);
+  --color-bg-subtle: var(--color-neutral-900);
+  --color-bg-muted: var(--color-neutral-800);
+  --color-bg-inverse: var(--color-neutral-50);
 
-    /* fg */
-    --color-fg-default: var(--color-neutral-50);
-    --color-fg-muted: var(--color-neutral-400);
-    --color-fg-subtle: var(--color-neutral-500);
-    --color-fg-inverse: var(--color-neutral-900);
+  /* fg */
+  --color-fg-default: var(--color-neutral-50);
+  --color-fg-muted: var(--color-neutral-400);
+  --color-fg-subtle: var(--color-neutral-500);
+  --color-fg-inverse: var(--color-neutral-900);
 
-    /* border */
-    --color-border-default: var(--color-neutral-800);
-    --color-border-strong: var(--color-neutral-700);
-    --color-border-subtle: var(--color-neutral-900);
+  /* border */
+  --color-border-default: var(--color-neutral-800);
+  --color-border-strong: var(--color-neutral-700);
+  --color-border-subtle: var(--color-neutral-900);
 
-    /* accent — 다크에선 한 단계 밝게 (design-refs.md Indigo preview 참조) */
-    --color-accent-default-token: var(--color-accent-400);
-    --color-accent-hover: var(--color-accent-300);
-    --color-accent-fg: var(--color-neutral-950);
-  }
+  /* accent — 다크에선 한 단계 밝게 (design-refs.md Indigo preview 참조) */
+  --color-accent-default-token: var(--color-accent-400);
+  --color-accent-hover: var(--color-accent-300);
+  --color-accent-fg: var(--color-neutral-950);
+
+  color-scheme: dark;
 }
 
 /* ------------------------------------------------------------------ */

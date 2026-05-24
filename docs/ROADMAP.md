@@ -22,7 +22,7 @@
 ## Week 2: 디자인 시스템 기반 (목표 10h)
 
 - [x] 2.1 `app/globals.css`의 `@theme` 블록에 디자인 토큰 적용 — 액센트는 indigo로 결정
-- [ ] 2.2 CSS 변수로 다크/라이트 테마 정의
+- [x] 2.2 CSS 변수로 다크/라이트 테마 정의 — `.dark` class selector + `next-themes` Provider
 - [ ] 2.3 Inter, JetBrains Mono 폰트 로드
 - [ ] 2.4 Radix UI 설치
 - [ ] 2.5 컴포넌트 작성: Button (5 variants), Input, Card, Badge, Dialog
@@ -36,7 +36,7 @@
 ## Week 3: 디자인 시스템 확장 + 레이아웃 (목표 10h)
 
 - [ ] 3.1 컴포넌트 추가: Tabs, Tooltip, Toast, Select, Skeleton, Avatar
-- [ ] 3.2 `next-themes`로 다크모드 토글
+- [x] 3.2 `next-themes`로 다크모드 토글 — 2.2와 같이 처리 (토글 버튼 UI는 3.3 Header에서)
 - [ ] 3.3 앱 레이아웃: Header (로고+nav+사용자), Sidebar, Main
 - [ ] 3.4 랜딩 페이지: Hero + Features + CTA + Footer
 - [ ] 3.5 로딩/에러 boundaries 추가
