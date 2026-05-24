@@ -161,9 +161,10 @@
   --color-accent-hover: var(--color-accent-hover);
   --color-accent-fg: var(--color-accent-fg);
 
-  /* 2.3에서 Inter/JetBrains Mono로 교체 예정. 임시로 Geist 유지 */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* next/font가 layout.tsx에서 --font-sans / --font-mono 변수에 직접 주입.
+     Tailwind 유틸리티(font-sans, font-mono)는 이 토큰을 그대로 사용. */
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, 'JetBrains Mono', monospace;
 }
 
 body {
