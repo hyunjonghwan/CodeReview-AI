@@ -3,11 +3,12 @@
 > Claude **Haiku / Sonnet / Opus** 3-tier 라우팅으로 비용을 줄이면서 리뷰 품질은 유지하는 AI 코드 리뷰 도구.
 
 [![Status](https://img.shields.io/badge/status-WIP-yellow)](#로드맵)
+[![Live](https://img.shields.io/badge/Vercel-deployed-000000?logo=vercel)](https://vercel.com/hyunjonghwans-projects/code-review-ai)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 
-> 🚧 **개발 중 (Week 1/8)** — 데모 GIF / 라이브 URL은 Week 4 MVP 완성 이후 추가 예정.
+> 🚧 **개발 중 (Week 2/8)** — 데모 GIF는 Week 4 MVP 완성 이후 추가 예정. 라이브 배포는 Vercel 대시보드의 Domains 참조.
 
 ---
 
@@ -108,16 +109,16 @@ codereview-ai/
 
 8주 일정으로 진행 중. 상세: [`docs/ROADMAP.md`](./docs/ROADMAP.md)
 
-| Week | 목표                            | 상태       |
-| ---- | ------------------------------- | ---------- |
-| 1    | 기획 & 셋업                     | 🟡 진행 중 |
-| 2    | 디자인 시스템 기반              | ⚪         |
-| 3    | 디자인 시스템 확장 + 레이아웃   | ⚪         |
-| 4    | **MVP**: 코드 입력 + AI 라우팅  | ⚪         |
-| 5    | 리뷰 결과 UI                    | ⚪         |
-| 6    | 히스토리 + 인증 + 비용 대시보드 | ⚪         |
-| 7    | 폴리싱 + 최적화                 | ⚪         |
-| 8    | 문서화 + 홍보                   | ⚪         |
+| Week | 목표                            | 상태    |
+| ---- | ------------------------------- | ------- |
+| 1    | 기획 & 셋업                     | ✅ 완료 |
+| 2    | 디자인 시스템 기반              | ⚪      |
+| 3    | 디자인 시스템 확장 + 레이아웃   | ⚪      |
+| 4    | **MVP**: 코드 입력 + AI 라우팅  | ⚪      |
+| 5    | 리뷰 결과 UI                    | ⚪      |
+| 6    | 히스토리 + 인증 + 비용 대시보드 | ⚪      |
+| 7    | 폴리싱 + 최적화                 | ⚪      |
+| 8    | 문서화 + 홍보                   | ⚪      |
 
 ---
 

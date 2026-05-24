@@ -14,8 +14,8 @@
 - [x] 1.5 ESLint + Prettier + Husky + lint-staged 설정
 - [x] 1.6 `tsconfig.json` strict 모드 + paths 설정
 - [x] 1.7 GitHub repo 생성, README 초안, Issues + Projects 보드 (Issues/Projects 보드는 수동 설정 권장)
-- [ ] 1.8 Vercel 프로젝트 연결, 첫 배포 확인
-- [ ] 1.9 회고 작성
+- [x] 1.8 Vercel 프로젝트 연결, 첫 배포 확인 → https://vercel.com/hyunjonghwans-projects/code-review-ai
+- [x] 1.9 회고 작성 → `docs/decisions/wk1-retro.md`
 
 ---
 
