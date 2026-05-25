@@ -39,9 +39,9 @@
 - [x] 3.2 `next-themes`로 다크모드 토글 — 2.2와 같이 처리 (토글 버튼 UI는 3.3 Header에서)
 - [x] 3.3 앱 레이아웃: SiteHeader/SiteFooter 추출 (`components/layout/`), 공용 아이콘 분리 (`components/icons.tsx`). Sidebar는 wireframe에 없어 보류(인증 도입 시 재검토)
 - [x] 3.4 랜딩 페이지: Header + Hero + Routing diagram + Features + CTA + Footer — `app/page.tsx` 단일 파일, Header는 인라인(3.3에서 분리 예정)
-- [ ] 3.5 로딩/에러 boundaries 추가
-- [ ] 3.6 모든 신규 컴포넌트 Storybook 스토리
-- [ ] 3.7 회고 작성
+- [x] 3.5 로딩/에러 boundaries — `app/loading.tsx`(Skeleton hero placeholder) + `app/error.tsx`(`'use client'` boundary, digest 노출 + Try again)
+- [x] 3.6 신규 컴포넌트 스토리 6개 — Tabs/Tooltip/Toaster/Select/Skeleton/Avatar, wireframe 매핑 데모(`Tabs.ReviewDetail`, `Select.Filter`, `Skeleton.ReviewRow`, `Avatar.Group`) 포함
+- [x] 3.7 회고 작성 — `docs/decisions/wk3-retro.md`
 
 ---
 
