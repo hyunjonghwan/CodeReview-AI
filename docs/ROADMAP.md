@@ -47,15 +47,16 @@
 
 ## Week 4: 코드 입력 & AI 라우팅 (목표 10h)
 
-- [ ] 4.1 Monaco Editor 설치 및 통합
-- [ ] 4.2 코드 입력 폼: 직접 붙여넣기 모드
-- [ ] 4.3 GitHub URL 입력 모드 (Octokit으로 파일 fetch)
-- [ ] 4.4 `lib/ai/router.ts`에 `detectTaskType()` 구현 (PROJECT.md §5)
-- [ ] 4.5 모델별 프롬프트 분리 (`lib/ai/prompts/`)
-- [ ] 4.6 Anthropic SDK + Vercel AI SDK 통합
-- [ ] 4.7 `/api/review` Route Handler 작성 (스트리밍)
-- [ ] 4.8 라우팅 결정 근거 UI 표시 (어떤 모델이 왜 선택됐는지)
-- [ ] 4.9 회고 작성
+- [x] 4.1 Monaco Editor 설치 및 통합 — `@monaco-editor/react` + `monaco-editor`, `components/code/code-editor.tsx` (`next/dynamic` ssr:false, next-themes로 vs/vs-dark 동기화)
+- [x] 4.2 코드 입력 폼: 직접 붙여넣기 모드 — `/reviews/new` (서버 페이지 + `new-review-form.tsx` 클라이언트). 제출은 4.7 라우트 핸들러 도착 전까지 sonner toast 임시 표시. Toaster는 `Providers`에 마운트
+- [ ] 4.3 `lib/ai/router.ts`에 `detectTaskType()` 구현 (PROJECT.md §5) — 기존 4.4
+- [ ] 4.4 모델별 프롬프트 분리 (`lib/ai/prompts/`) — 기존 4.5
+- [ ] 4.5 Anthropic SDK + Vercel AI SDK 통합 — 기존 4.6
+- [ ] 4.6 `/api/review` Route Handler 작성 (스트리밍) — 기존 4.7
+- [ ] 4.7 라우팅 결정 근거 UI 표시 (어떤 모델이 왜 선택됐는지) — 기존 4.8
+- [ ] 4.8 회고 작성 — 기존 4.9
+
+> 4.3 GitHub URL 입력 모드는 Week 6.6a로 이동 — PROJECT.md F1 결정(OAuth 도입 후, rate limit 회피)에 맞춤.
 
 ---
 
@@ -80,6 +81,7 @@
 - [ ] 6.4 Auth.js + GitHub Provider 설정
 - [ ] 6.5 보호된 라우트 미들웨어
 - [ ] 6.6 리뷰 히스토리 페이지 (페이지네이션)
+- [ ] 6.6a **GitHub URL 입력 모드 (Octokit으로 파일 fetch)** — Week 4.3에서 이동. OAuth 토큰으로 인증된 fetch (rate limit 회피)
 - [ ] 6.7 리뷰 상세 페이지 (저장된 리뷰 다시 보기)
 - [ ] 6.8 비용 대시보드: 모델별 사용량 차트 (Recharts)
 - [ ] 6.9 "라우팅으로 X% 절감" 계산 로직 + 표시

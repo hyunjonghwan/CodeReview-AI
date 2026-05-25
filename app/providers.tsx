@@ -2,6 +2,7 @@
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import type { ComponentProps } from 'react';
+import { Toaster } from '@/components/ui/toaster';
 
 type Props = ComponentProps<typeof NextThemesProvider>;
 
@@ -15,6 +16,7 @@ export function Providers({ children, ...props }: Props) {
       {...props}
     >
       {children}
+      <Toaster position="top-right" />
     </NextThemesProvider>
   );
 }
