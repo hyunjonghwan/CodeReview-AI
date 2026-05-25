@@ -38,7 +38,7 @@
 - [x] 3.1 컴포넌트 추가: Tabs, Tooltip, Toast(sonner+next-themes), Select, Skeleton, Avatar — `components/ui/`
 - [x] 3.2 `next-themes`로 다크모드 토글 — 2.2와 같이 처리 (토글 버튼 UI는 3.3 Header에서)
 - [ ] 3.3 앱 레이아웃: Header (로고+nav+사용자), Sidebar, Main
-- [ ] 3.4 랜딩 페이지: Hero + Features + CTA + Footer
+- [x] 3.4 랜딩 페이지: Header + Hero + Routing diagram + Features + CTA + Footer — `app/page.tsx` 단일 파일, Header는 인라인(3.3에서 분리 예정)
 - [ ] 3.5 로딩/에러 boundaries 추가
 - [ ] 3.6 모든 신규 컴포넌트 Storybook 스토리
 - [ ] 3.7 회고 작성
