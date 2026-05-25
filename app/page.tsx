@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { ArrowRight } from '@/components/icons';
+import { SiteFooter } from '@/components/layout/site-footer';
+import { SiteHeader } from '@/components/layout/site-header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
@@ -14,46 +17,6 @@ export default function LandingPage() {
       </main>
       <SiteFooter />
     </>
-  );
-}
-
-function SiteHeader() {
-  return (
-    <header className="border-border-default supports-[backdrop-filter]:bg-bg-default/70 sticky top-0 z-40 w-full border-b backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-[1280px] items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-          <LogoMark className="text-accent size-5" />
-          <span>CodeReview AI</span>
-        </Link>
-        <nav className="text-fg-muted hidden items-center gap-6 text-sm md:flex">
-          <Link href="#features" className="hover:text-fg-default transition-colors">
-            Features
-          </Link>
-          <Link href="#routing" className="hover:text-fg-default transition-colors">
-            Routing
-          </Link>
-          <a
-            href="https://github.com/hyunjonghwan/CodeReview-AI"
-            className="hover:text-fg-default transition-colors"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-        </nav>
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-            <Link href="/reviews">Sign in</Link>
-          </Button>
-          <Button asChild size="sm">
-            <Link href="/reviews/new">
-              Start
-              <ArrowRight className="size-4" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </header>
   );
 }
 
@@ -202,69 +165,6 @@ function FinalCta() {
         </Button>
       </Card>
     </section>
-  );
-}
-
-function SiteFooter() {
-  return (
-    <footer className="border-border-default mt-auto border-t">
-      <div className="text-fg-subtle mx-auto flex max-w-[1280px] flex-col items-center justify-between gap-2 px-6 py-6 text-sm sm:flex-row">
-        <span>© 2026 CodeReview AI</span>
-        <div className="flex items-center gap-5">
-          <a
-            href="https://github.com/hyunjonghwan/CodeReview-AI"
-            className="hover:text-fg-default transition-colors"
-            target="_blank"
-            rel="noreferrer"
-          >
-            GitHub
-          </a>
-          <Link href="#features" className="hover:text-fg-default transition-colors">
-            Docs
-          </Link>
-          <Link href="#" className="hover:text-fg-default transition-colors">
-            Privacy
-          </Link>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="m9 18 6-12" />
-      <path d="m4 9 5 3-5 3" />
-      <path d="m20 9-5 3 5 3" />
-    </svg>
-  );
-}
-
-function ArrowRight({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M5 12h14" />
-      <path d="m13 5 7 7-7 7" />
-    </svg>
   );
 }
 
