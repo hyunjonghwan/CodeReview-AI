@@ -1,10 +1,14 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, type FormEvent } from 'react';
+import { useMemo, useState, type FormEvent } from 'react';
 import { CodeEditor } from '@/components/code/code-editor';
 import { ArrowRight } from '@/components/icons';
-import { ModelIndicator } from '@/components/review/model-indicator';
+import {
+  ReviewResult,
+  type ReviewStatus,
+  type RoutingDecision,
+} from '@/components/review/review-result';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -14,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { parseReview } from '@/lib/ai/parse-review';
+import type { ReviewResponse } from '@/lib/ai/prompts/output-schema';
 
 const LANGUAGES = [
   { value: 'typescript', label: 'TypeScript', ext: 'ts' },
@@ -37,14 +43,6 @@ const LANGUAGES = [
 
 const DEFAULT_LANGUAGE = 'typescript';
 
-type ReviewStatus = 'idle' | 'streaming' | 'done' | 'error';
-
-interface RoutingDecision {
-  model: string;
-  taskType: string;
-  reason: string;
-}
-
 export function NewReviewForm() {
   const [filename, setFilename] = useState('');
   const [language, setLanguage] = useState<string>(DEFAULT_LANGUAGE);
@@ -52,13 +50,21 @@ export function NewReviewForm() {
 
   const [status, setStatus] = useState<ReviewStatus>('idle');
   const [result, setResult] = useState('');
+  const [parsed, setParsed] = useState<ReviewResponse | null>(null);
   const [decision, setDecision] = useState<RoutingDecision | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
+  const [activeLine, setActiveLine] = useState<number | null>(null);
 
   const lines = code === '' ? 0 : code.split('\n').length;
   const isStreaming = status === 'streaming';
   const canSubmit = code.trim().length > 0 && !isStreaming;
   const ext = LANGUAGES.find((l) => l.value === language)?.ext ?? 'txt';
+
+  // 이슈가 가리키는 라인들 (null 제외) — Monaco 데코레이션 입력.
+  const highlightLines = useMemo(
+    () => (parsed ? parsed.issues.map((i) => i.line).filter((l): l is number => l !== null) : []),
+    [parsed],
+  );
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -66,8 +72,10 @@ export function NewReviewForm() {
 
     setStatus('streaming');
     setResult('');
+    setParsed(null);
     setDecision(null);
     setErrorMsg('');
+    setActiveLine(null);
 
     try {
       const res = await fetch('/api/review', {
@@ -103,6 +111,8 @@ export function NewReviewForm() {
       if (acc.trim().length === 0) {
         throw new Error('리뷰 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
       }
+      // 펜스 스트립 + JSON.parse. 실패하면 null → 결과 패널이 원문 폴백을 보여준다.
+      setParsed(parseReview(acc));
       setStatus('done');
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
@@ -171,7 +181,13 @@ export function NewReviewForm() {
             </span>
           </div>
           <div className="h-[480px]">
-            <CodeEditor value={code} onChange={setCode} language={language} />
+            <CodeEditor
+              value={code}
+              onChange={setCode}
+              language={language}
+              highlightLines={highlightLines}
+              activeLine={activeLine}
+            />
           </div>
         </div>
 
@@ -184,37 +200,15 @@ export function NewReviewForm() {
       </form>
 
       {status !== 'idle' && (
-        <section className="border-border-default bg-bg-subtle space-y-4 rounded-lg border p-5">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-fg-default text-sm font-semibold">Review result</h2>
-            <span className="text-fg-subtle text-xs">Week 5에서 구조화 카드로 대체 예정</span>
-          </div>
-
-          {decision && (
-            <div className="border-border-default bg-bg-default space-y-2 rounded-md border px-3 py-2.5">
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                <span className="text-fg-subtle">Detected</span>
-                <span className="text-fg-muted font-mono">{decision.taskType}</span>
-                <ArrowRight className="text-fg-subtle size-3" />
-                <ModelIndicator model={decision.model} />
-              </div>
-              <p className="text-fg-muted text-xs leading-relaxed">
-                <span className="text-fg-subtle font-medium">Why this model? </span>
-                {decision.reason}
-              </p>
-            </div>
-          )}
-
-          {status === 'error' ? (
-            <p className="text-error-default text-sm">{errorMsg}</p>
-          ) : result ? (
-            <pre className="text-fg-default max-h-[480px] overflow-auto font-mono text-xs leading-relaxed whitespace-pre-wrap">
-              {result}
-            </pre>
-          ) : (
-            isStreaming && <p className="text-fg-muted text-sm">리뷰 생성 중…</p>
-          )}
-        </section>
+        <ReviewResult
+          status={status}
+          result={result}
+          parsed={parsed}
+          errorMsg={errorMsg}
+          decision={decision}
+          activeLine={activeLine}
+          onSelectIssue={setActiveLine}
+        />
       )}
     </div>
   );

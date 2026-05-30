@@ -62,14 +62,14 @@
 
 ## Week 5: 리뷰 결과 UI (목표 10h)
 
-- [ ] 5.1 리뷰 응답 파싱 (구조화된 JSON 응답 파싱 또는 마크다운 렌더링)
-- [ ] 5.2 IssueCard 컴포넌트: 심각도 배지, 카테고리, 라인 정보
-- [ ] 5.3 코드 라인 하이라이트 (Monaco decorations)
-- [ ] 5.4 Diff 뷰어 (react-diff-viewer-continued)
-- [ ] 5.5 카테고리 필터 (버그/성능/스타일/보안)
-- [ ] 5.6 인라인 코멘트 UI
-- [ ] 5.7 빈 상태/로딩 상태 디자인
-- [ ] 5.8 회고 작성
+- [x] 5.1 리뷰 응답 파싱 — `lib/ai/parse-review.ts`: ```json 펜스 스트립 + JSON.parse + 최상위 형태 가드. streamText 유지(streamObject는 보류). 실제 스트리밍 출력으로 파싱 검증.
+- [x] 5.2 IssueCard — `components/review/issue-card.tsx`: 심각도 글리프(▲◆○)+Badge variant, 카테고리(6→4 그룹), Line N, Suggested fix 코드블록.
+- [x] 5.3 코드 라인 하이라이트 — `code-editor.tsx`에 `onMount`+`createDecorationsCollection`. 이슈 라인 gutter 바+배경(`globals.css` `.cr-issue-*`, accent-500).
+- [x] 5.4 Diff 뷰어 — suggestion을 IssueCard 코드블록으로 표시(붙여넣기 흐름엔 before/after가 없어 full diff 부적합). **full diff(react-diff-viewer-continued)는 실제 diff가 있는 Week 6.6a(GitHub PR 모드)로 이연.**
+- [x] 5.5 카테고리 필터 — 필터 칩(All + 존재 그룹), 6종→4종(Bug/Perf/Style/Sec) 매핑. wireframe-first 원칙(데이터는 6종 유지, 표시만 그룹핑).
+- [x] 5.6 인라인 코멘트 UI — 카드 클릭 → `activeLine` → 에디터 `revealLineInCenter` + 강조 데코(카드↔코드 연동).
+- [x] 5.7 빈 상태/로딩 상태 — 이슈 0건 빈 상태 + 스트리밍 로딩 + 파싱 실패 원문 폴백 + 에러 메시지.
+- [x] 5.8 회고 작성 → `docs/decisions/wk5-retro.md`
 
 ---
 

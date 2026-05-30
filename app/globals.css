@@ -219,3 +219,22 @@ body {
   color: var(--color-fg-default);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+/* ------------------------------------------------------------------ */
+/*  Monaco 이슈 라인 데코레이션 (Week 5.3)                              */
+/*  accent-500(#6366f1) 기반. Monaco DOM 내부라 전역 클래스로 정의.    */
+/* ------------------------------------------------------------------ */
+
+.cr-issue-line {
+  background-color: rgb(99 102 241 / 0.08);
+}
+
+.cr-issue-line--active {
+  background-color: rgb(99 102 241 / 0.18);
+}
+
+.cr-issue-gutter {
+  width: 3px !important;
+  margin-left: 2px;
+  background-color: var(--color-accent-500);
+}
