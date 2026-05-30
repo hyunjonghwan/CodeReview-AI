@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useState, type FormEvent } from 'react';
-import { toast } from 'sonner';
 import { CodeEditor } from '@/components/code/code-editor';
 import { ArrowRight } from '@/components/icons';
+import { ModelIndicator } from '@/components/review/model-indicator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -37,93 +37,185 @@ const LANGUAGES = [
 
 const DEFAULT_LANGUAGE = 'typescript';
 
+type ReviewStatus = 'idle' | 'streaming' | 'done' | 'error';
+
+interface RoutingDecision {
+  model: string;
+  taskType: string;
+  reason: string;
+}
+
 export function NewReviewForm() {
   const [filename, setFilename] = useState('');
   const [language, setLanguage] = useState<string>(DEFAULT_LANGUAGE);
   const [code, setCode] = useState('');
 
+  const [status, setStatus] = useState<ReviewStatus>('idle');
+  const [result, setResult] = useState('');
+  const [decision, setDecision] = useState<RoutingDecision | null>(null);
+  const [errorMsg, setErrorMsg] = useState('');
+
   const lines = code === '' ? 0 : code.split('\n').length;
-  const canSubmit = code.trim().length > 0;
+  const isStreaming = status === 'streaming';
+  const canSubmit = code.trim().length > 0 && !isStreaming;
   const ext = LANGUAGES.find((l) => l.value === language)?.ext ?? 'txt';
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!canSubmit) return;
-    toast.info('Review pipeline lands in Week 4.7.', {
-      description: `${filename || `untitled.${ext}`} · ${language} · ${lines} LOC`,
-    });
+
+    setStatus('streaming');
+    setResult('');
+    setDecision(null);
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        throw new Error(data?.error ?? `요청이 실패했습니다 (${res.status}).`);
+      }
+
+      // 라우팅 결정은 헤더로 도착한다 (reason은 인코딩되어 있음).
+      setDecision({
+        model: res.headers.get('X-Review-Model') ?? '',
+        taskType: res.headers.get('X-Review-Task') ?? '',
+        reason: decodeURIComponent(res.headers.get('X-Review-Reason') ?? ''),
+      });
+
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error('응답 스트림을 읽을 수 없습니다.');
+
+      const decoder = new TextDecoder();
+      let acc = '';
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        setResult(acc);
+      }
+      // 200 응답이라도 본문이 비면 스트림 중간에 모델 호출이 실패한 것.
+      if (acc.trim().length === 0) {
+        throw new Error('리뷰 생성에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      }
+      setStatus('done');
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : '알 수 없는 오류가 발생했습니다.');
+      setStatus('error');
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <header className="space-y-2">
-        <Link
-          href="/"
-          className="text-fg-muted hover:text-fg-default inline-flex items-center text-sm transition-colors"
-        >
-          ← Back to home
-        </Link>
-        <h1 className="text-fg-default text-2xl font-semibold tracking-tight sm:text-3xl">
-          New review
-        </h1>
-        <p className="text-fg-muted text-sm">
-          Paste your code below. The router picks Haiku, Sonnet, or Opus based on size and
-          complexity.
-        </p>
-      </header>
+    <div className="flex flex-col gap-8">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <header className="space-y-2">
+          <Link
+            href="/"
+            className="text-fg-muted hover:text-fg-default inline-flex items-center text-sm transition-colors"
+          >
+            ← Back to home
+          </Link>
+          <h1 className="text-fg-default text-2xl font-semibold tracking-tight sm:text-3xl">
+            New review
+          </h1>
+          <p className="text-fg-muted text-sm">
+            Paste your code below. The router picks Haiku, Sonnet, or Opus based on size and
+            complexity.
+          </p>
+        </header>
 
-      <div className="grid gap-4 sm:grid-cols-[1fr_220px]">
-        <div className="space-y-1.5">
-          <label htmlFor="filename" className="text-fg-default text-sm font-medium">
-            Filename <span className="text-fg-subtle font-normal">(optional)</span>
-          </label>
-          <Input
-            id="filename"
-            value={filename}
-            onChange={(e) => setFilename(e.target.value)}
-            placeholder="auth/login.ts"
-            className="font-mono"
-            autoComplete="off"
-            spellCheck={false}
-          />
+        <div className="grid gap-4 sm:grid-cols-[1fr_220px]">
+          <div className="space-y-1.5">
+            <label htmlFor="filename" className="text-fg-default text-sm font-medium">
+              Filename <span className="text-fg-subtle font-normal">(optional)</span>
+            </label>
+            <Input
+              id="filename"
+              value={filename}
+              onChange={(e) => setFilename(e.target.value)}
+              placeholder="auth/login.ts"
+              className="font-mono"
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label htmlFor="language" className="text-fg-default text-sm font-medium">
+              Language
+            </label>
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger id="language">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {LANGUAGES.map((lang) => (
+                  <SelectItem key={lang.value} value={lang.value}>
+                    {lang.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-        <div className="space-y-1.5">
-          <label htmlFor="language" className="text-fg-default text-sm font-medium">
-            Language
-          </label>
-          <Select value={language} onValueChange={setLanguage}>
-            <SelectTrigger id="language">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {LANGUAGES.map((lang) => (
-                <SelectItem key={lang.value} value={lang.value}>
-                  {lang.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
 
-      <div className="border-border-default bg-bg-subtle overflow-hidden rounded-lg border">
-        <div className="border-border-default flex items-center justify-between border-b px-4 py-2 text-xs">
-          <span className="text-fg-muted font-mono">{filename || `untitled.${ext}`}</span>
-          <span className="text-fg-subtle font-mono">
-            {lines} {lines === 1 ? 'line' : 'lines'}
-          </span>
+        <div className="border-border-default bg-bg-subtle overflow-hidden rounded-lg border">
+          <div className="border-border-default flex items-center justify-between border-b px-4 py-2 text-xs">
+            <span className="text-fg-muted font-mono">{filename || `untitled.${ext}`}</span>
+            <span className="text-fg-subtle font-mono">
+              {lines} {lines === 1 ? 'line' : 'lines'}
+            </span>
+          </div>
+          <div className="h-[480px]">
+            <CodeEditor value={code} onChange={setCode} language={language} />
+          </div>
         </div>
-        <div className="h-[480px]">
-          <CodeEditor value={code} onChange={setCode} language={language} />
-        </div>
-      </div>
 
-      <div className="flex items-center justify-end gap-3">
-        <Button type="submit" disabled={!canSubmit}>
-          Review code
-          <ArrowRight className="size-4" />
-        </Button>
-      </div>
-    </form>
+        <div className="flex items-center justify-end gap-3">
+          <Button type="submit" disabled={!canSubmit}>
+            {isStreaming ? 'Reviewing…' : 'Review code'}
+            {!isStreaming && <ArrowRight className="size-4" />}
+          </Button>
+        </div>
+      </form>
+
+      {status !== 'idle' && (
+        <section className="border-border-default bg-bg-subtle space-y-4 rounded-lg border p-5">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-fg-default text-sm font-semibold">Review result</h2>
+            <span className="text-fg-subtle text-xs">Week 5에서 구조화 카드로 대체 예정</span>
+          </div>
+
+          {decision && (
+            <div className="border-border-default bg-bg-default space-y-2 rounded-md border px-3 py-2.5">
+              <div className="flex flex-wrap items-center gap-2 text-xs">
+                <span className="text-fg-subtle">Detected</span>
+                <span className="text-fg-muted font-mono">{decision.taskType}</span>
+                <ArrowRight className="text-fg-subtle size-3" />
+                <ModelIndicator model={decision.model} />
+              </div>
+              <p className="text-fg-muted text-xs leading-relaxed">
+                <span className="text-fg-subtle font-medium">Why this model? </span>
+                {decision.reason}
+              </p>
+            </div>
+          )}
+
+          {status === 'error' ? (
+            <p className="text-error-default text-sm">{errorMsg}</p>
+          ) : result ? (
+            <pre className="text-fg-default max-h-[480px] overflow-auto font-mono text-xs leading-relaxed whitespace-pre-wrap">
+              {result}
+            </pre>
+          ) : (
+            isStreaming && <p className="text-fg-muted text-sm">리뷰 생성 중…</p>
+          )}
+        </section>
+      )}
+    </div>
   );
 }

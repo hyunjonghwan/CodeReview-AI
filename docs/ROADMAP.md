@@ -49,12 +49,12 @@
 
 - [x] 4.1 Monaco Editor 설치 및 통합 — `@monaco-editor/react` + `monaco-editor`, `components/code/code-editor.tsx` (`next/dynamic` ssr:false, next-themes로 vs/vs-dark 동기화)
 - [x] 4.2 코드 입력 폼: 직접 붙여넣기 모드 — `/reviews/new` (서버 페이지 + `new-review-form.tsx` 클라이언트). 제출은 4.7 라우트 핸들러 도착 전까지 sonner toast 임시 표시. Toaster는 `Providers`에 마운트
-- [ ] 4.3 `lib/ai/router.ts`에 `detectTaskType()` 구현 (PROJECT.md §5) — 기존 4.4
-- [ ] 4.4 모델별 프롬프트 분리 (`lib/ai/prompts/`) — 기존 4.5
-- [ ] 4.5 Anthropic SDK + Vercel AI SDK 통합 — 기존 4.6
-- [ ] 4.6 `/api/review` Route Handler 작성 (스트리밍) — 기존 4.7
-- [ ] 4.7 라우팅 결정 근거 UI 표시 (어떤 모델이 왜 선택됐는지) — 기존 4.8
-- [ ] 4.8 회고 작성 — 기존 4.9
+- [x] 4.3 `lib/ai/router.ts`에 `detectTaskType()` 구현 (PROJECT.md §5) — `RouterDecision`(taskType+model+reason) 반환, 4.7 UI에서 그대로 사용
+- [x] 4.4 모델별 프롬프트 분리 (`lib/ai/prompts/`) — 한국어 system prompt, JSON 출력 키만 영어. 공통 `output-schema.ts`로 타입+스키마 지시문 공유. 테스트는 러너 미설치로 보류(Week 7.9에서 도입)
+- [x] 4.5 Anthropic SDK + Vercel AI SDK 통합 — `@anthropic-ai/sdk` `ai` `@ai-sdk/anthropic` 설치. `lib/ai/client.ts`의 `planReview()`가 router 결정 + LanguageModel + system prompt 묶어서 반환. `.env.example` 추가, `.gitignore`에 `!.env.example` 예외
+- [x] 4.6 `/api/review` Route Handler (스트리밍) — `streamText` + `toTextStreamResponse`. 라우팅 결정은 `X-Review-Model/-Task/-Reason` 헤더로 동봉(reason은 한국어라 `encodeURIComponent`). 폼은 toast 스텁 제거 후 fetch+스트림 리더로 배선, 결과는 임시 `<pre>` 패널(5장에서 IssueCard로 교체). 최소 에러처리(서버 `onError` 로깅 + 클라 "빈 본문→에러"). curl로 400 2종·헤더·실제 스트리밍 검증. **주의: 모델이 ```json 코드펜스로 감싸 반환 → 5.1 파서가 펜스 스트립 필요.**
+- [x] 4.7 라우팅 결정 근거 UI 표시 — 도메인 컴포넌트 `components/review/model-indicator.tsx` 신규(model id→Haiku/Sonnet/Opus + 티어별 액센트, family 파싱으로 MODEL_MAP 중복 회피). 폼 결과 패널에 `Detected: {taskType} → [ModelIndicator]` + "Why this model? {reason}" 블록. wireframe §3 "Why this model?" 포맷 선반영. 랜딩 다이어그램 통일은 범위 밖이라 보류(회고에 명시).
+- [x] 4.8 회고 작성 → `docs/decisions/wk4-retro.md`
 
 > 4.3 GitHub URL 입력 모드는 Week 6.6a로 이동 — PROJECT.md F1 결정(OAuth 도입 후, rate limit 회피)에 맞춤.
 
