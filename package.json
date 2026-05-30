@@ -25,6 +25,8 @@
     ]
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.79",
+    "@anthropic-ai/sdk": "^0.98.0",
     "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -32,6 +34,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "ai": "^6.0.191",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "monaco-editor": "^0.55.1",
